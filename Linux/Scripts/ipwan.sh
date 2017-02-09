@@ -8,6 +8,9 @@
 #								          #
 ###########################################################################
 
-HOST="http://checkip.dyndns.org/"
+HOST="https://wtfismyip.com/text"
+IP=$(wget --no-proxy $HOST -O - -o /dev/null)
 
-wget --no-proxy $HOST -O - -o /dev/null | cut -d: -f 2 | cut -d\< -f 1 | sed -e "s/ //g"
+COUNTRY=$(geoiplookup ${IP} | awk -F : '{print $2}')
+
+printf "${IP} ${COUNTRY}\n"
